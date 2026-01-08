@@ -11,3 +11,10 @@ winning scenarios:
 [null x null]    [null x null]  -> diagonal victories           
 [null null x]    [x null null]                              [3][2][1]
 */
+
+function player (name, shape) {
+    const playerName = name || 'Player One';
+    const chosenShape = shape;
+
+    return {  playerName, chosenShape  };
+}
