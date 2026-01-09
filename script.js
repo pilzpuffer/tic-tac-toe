@@ -12,8 +12,24 @@ winning scenarios:
 [null null x]    [x null null]                              [3][2][1]
 */
 
+const gameBoard = function (){
+    let firstRow = [null, null, null];
+    let secondRow = [null, null, null];
+    let thirdRow = [null, null, null];
+    let fullGameBoard = [firstRow, secondRow, thirdRow]
+    
+    console.log('hi!!');
+    console.log(fullGameBoard);
+
+    return { firstRow, secondRow, thirdRow, fullGameBoard }
+}();
+
+// function gameFlow {
+
+// }
+
 function player (name, shape) {
-    const playerName = name || 'Player One';
+    const playerName = name || `Player ${shape}`;
     const chosenShape = shape;
 
     return {  playerName, chosenShape  };
