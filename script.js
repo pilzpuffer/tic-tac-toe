@@ -13,13 +13,15 @@ winning scenarios:
 */
 
 const gameBoard = function (){
-    let fullGameBoard = [['x', null, null], 
-                        [null, 'x', null], 
-                        [null, null, 'x']];
+    let fullGameBoard = [['x', 'z', 'y'], 
+                        ['b', 'y', 'm'], 
+                        ['y', 'k', 'x']];
     return { fullGameBoard }
 }();
 
 function gameFlow() {
+    let diagonalCheckLeft = [];
+    let diagonalCheckRight = [];
 
     const checkWin = function() {
         //check for horizontal wins
@@ -27,20 +29,37 @@ function gameFlow() {
             if (row.every((value) => value === row[0])) {
                 console.log('meow', gameBoard.fullGameBoard.indexOf(row));
                 console.log(`winning value is ${row[0]}`);
-                break;
-            } else {
-                console.log('woof', gameBoard.fullGameBoard.indexOf(row)); //can be removed later, added just for logging
-            }
+                break; //will need to return winning data instead of 'break' commands (true/false, winning shape)
+            } 
         }
 
         //check for vertical wins
         for (i = 0; i < gameBoard.fullGameBoard.length; i++) {
+        
             if ((gameBoard.fullGameBoard[0][i] === gameBoard.fullGameBoard[1][i] )
                 && (gameBoard.fullGameBoard[1][i] === gameBoard.fullGameBoard[2][i])) {
                     console.log(`column number ${i} won!`);
-                    break;
+                    break; //will need to return winning data instead of 'break' commands (true/false, winning shape)
                 }
         }
+
+        //check for diagonal wins
+        for (i = 0; i < gameBoard.fullGameBoard.length; i++) {
+            diagonalCheckLeft.push(gameBoard.fullGameBoard[i][i]);
+            diagonalCheckRight.push(gameBoard.fullGameBoard[i][2-i])
+        }
+
+        if (diagonalCheckLeft.every((value) => value === diagonalCheckLeft[0])) {
+            console.log('wahoo!');
+            //will need to return winning data instead of 'break' commands (true/false, winning shape)
+            
+        } 
+        
+        if (diagonalCheckRight.every((value) => value === diagonalCheckRight[0])) {
+            console.log('oohaw!');
+            //will need to return winning data instead of 'break' commands (true/false, winning shape)
+        }
+
     }
 
     return { checkWin } //temp measure, later will be done within gameflow
