@@ -13,23 +13,33 @@ winning scenarios:
 */
 
 const gameBoard = function (){
-    let fullGameBoard = [[null, null, null], [null, null, null], [null, null, null]];
-
+    let fullGameBoard = [['x', null, null], 
+                        [null, 'x', null], 
+                        [null, null, 'x']];
     return { fullGameBoard }
 }();
 
 function gameFlow() {
 
     const checkWin = function() {
-        //checks for horizontal wins
+        //check for horizontal wins
         for (const row of gameBoard.fullGameBoard) {
             if (row.every((value) => value === row[0])) {
                 console.log('meow', gameBoard.fullGameBoard.indexOf(row));
                 console.log(`winning value is ${row[0]}`);
                 break;
             } else {
-                console.log('woof', gameBoard.fullGameBoard.indexOf(row))
+                console.log('woof', gameBoard.fullGameBoard.indexOf(row)); //can be removed later, added just for logging
             }
+        }
+
+        //check for vertical wins
+        for (i = 0; i < gameBoard.fullGameBoard.length; i++) {
+            if ((gameBoard.fullGameBoard[0][i] === gameBoard.fullGameBoard[1][i] )
+                && (gameBoard.fullGameBoard[1][i] === gameBoard.fullGameBoard[2][i])) {
+                    console.log(`column number ${i} won!`);
+                    break;
+                }
         }
     }
 
