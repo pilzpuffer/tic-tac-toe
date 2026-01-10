@@ -25,6 +25,8 @@ function gameFlow() {
         for (const row of gameBoard.fullGameBoard) {
             if (row.every((value) => value === row[0])) {
                 console.log('meow', gameBoard.fullGameBoard.indexOf(row));
+                console.log(`winning value is ${row[0]}`);
+                break;
             } else {
                 console.log('woof', gameBoard.fullGameBoard.indexOf(row))
             }
