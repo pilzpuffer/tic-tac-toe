@@ -13,9 +13,9 @@ winning scenarios:
 */
 
 const gameBoard = function (){
-    let fullGameBoard = [['x', 'z', 'y'], 
-                        ['b', 'y', 'm'], 
-                        ['y', 'k', 'x']];
+    let fullGameBoard = [[null, null, null], 
+                        [null, null, null], 
+                        [null, null, null]];
     return { fullGameBoard }
 }();
 
@@ -23,10 +23,11 @@ function gameFlow() {
     let diagonalCheckLeft = [];
     let diagonalCheckRight = [];
 
+    //run the code below anytime a new shape is placed on gameboard! checks must be done for non-null values
     const checkWin = function() {
         //check for horizontal wins
         for (const row of gameBoard.fullGameBoard) {
-            if (row.every((value) => value === row[0])) {
+            if (row.every((value) => value === row[0] && value !== null)) {
                 console.log('meow', gameBoard.fullGameBoard.indexOf(row));
                 console.log(`winning value is ${row[0]}`);
                 break; //will need to return winning data instead of 'break' commands (true/false, winning shape)
@@ -36,7 +37,8 @@ function gameFlow() {
         //check for vertical wins
         for (i = 0; i < gameBoard.fullGameBoard.length; i++) {
         
-            if ((gameBoard.fullGameBoard[0][i] === gameBoard.fullGameBoard[1][i] )
+            if ((gameBoard.fullGameBoard[0][i] !== null &&
+                gameBoard.fullGameBoard[0][i] === gameBoard.fullGameBoard[1][i] )
                 && (gameBoard.fullGameBoard[1][i] === gameBoard.fullGameBoard[2][i])) {
                     console.log(`column number ${i} won!`);
                     break; //will need to return winning data instead of 'break' commands (true/false, winning shape)
@@ -49,25 +51,35 @@ function gameFlow() {
             diagonalCheckRight.push(gameBoard.fullGameBoard[i][2-i])
         }
 
-        if (diagonalCheckLeft.every((value) => value === diagonalCheckLeft[0])) {
+        if (diagonalCheckLeft.every((value) => value === diagonalCheckLeft[0] && value !== null)) {
             console.log('wahoo!');
             //will need to return winning data instead of 'break' commands (true/false, winning shape)
             
         } 
         
-        if (diagonalCheckRight.every((value) => value === diagonalCheckRight[0])) {
+        if (diagonalCheckRight.every((value) => value === diagonalCheckRight[0] && value !== null)) {
             console.log('oohaw!');
             //will need to return winning data instead of 'break' commands (true/false, winning shape)
         }
 
+
+        //add a check for a 'tie' scenario as well! 
+
     }
 
-    return { checkWin } //temp measure, later will be done within gameflow
+    return { checkWin };
 }
 
 function player (name, shape) {
     const playerName = name || `Player ${shape}`;
     const chosenShape = shape;
 
-    return {  playerName, chosenShape  };
+    const placeShape = function () {
+        //will be attached to an event listener for clicks on gameBoard - once clicked, will need to check 
+        //if there's a shape already placed
+        //if not - track whose turn it is, place shape, update fullGameBoard
+        //then - run CheckWin to see if this was the 'winning' move
+    }
+
+    return {  playerName, chosenShape, placeShape };
 }
