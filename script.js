@@ -20,11 +20,11 @@ const gameBoard = function (){
 }();
 
 function gameFlow() {
-    let diagonalCheckLeft = [];
-    let diagonalCheckRight = [];
-
     //run the code below anytime a new shape is placed on gameboard! checks must be done for non-null values
     const checkWin = function() {
+            let diagonalCheckLeft = [];
+            let diagonalCheckRight = [];
+
         //check for horizontal wins
         for (const row of gameBoard.fullGameBoard) {
             if (row.every((value) => value === row[0] && value !== null)) {
@@ -50,6 +50,9 @@ function gameFlow() {
             diagonalCheckLeft.push(gameBoard.fullGameBoard[i][i]);
             diagonalCheckRight.push(gameBoard.fullGameBoard[i][2-i])
         }
+
+        console.log('left diagonal is', diagonalCheckLeft);
+        console.log('right diagonal is', diagonalCheckRight);
 
         if (diagonalCheckLeft.every((value) => value === diagonalCheckLeft[0] && value !== null)) {
             console.log('wahoo!');
