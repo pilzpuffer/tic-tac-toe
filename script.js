@@ -13,36 +13,50 @@ winning scenarios:
 */
 
 const gameBoard = function (){
-    let fullGameBoard = [[null, null, null], 
-                        [null, null, null], 
-                        [null, null, null]];
+    let fullGameBoard = [['O', 'O', "X"], 
+                        ["X", 'X', "O"], 
+                        ['O', 'X', 'X']];
+                        
+    //those values will need to be tied to the actual DOM elements + display update should be handled here... 
+    //maybe can be done through 'data' attributes on divs?
     return { fullGameBoard }
 }();
 
 function gameFlow() {
-    //run the code below anytime a new shape is placed on gameboard! checks must be done for non-null values
+    //run the code below anytime a new shape is placed on gameboard! checks are done for non-null values
     const checkWin = function() {
-            let diagonalCheckLeft = [];
-            let diagonalCheckRight = [];
+        let diagonalCheckLeft = [];
+        let diagonalCheckRight = [];
+        let rowCheck = [];
+        let columnCheck = [[], [], [], []];
 
         //check for horizontal wins
-        for (const row of gameBoard.fullGameBoard) {
-            if (row.every((value) => value === row[0] && value !== null)) {
-                console.log('meow', gameBoard.fullGameBoard.indexOf(row));
-                console.log(`winning value is ${row[0]}`);
-                break; //will need to return winning data instead of 'break' commands (true/false, winning shape)
-            } 
-        }
+        const horizontalWin = function() {
+            for (const row of gameBoard.fullGameBoard) {
+                console.log(row);
+                if (row.every((value) => value === row[0] && value !== null)) {
+                    console.log('meow', gameBoard.fullGameBoard.indexOf(row));
+                    console.log(`winning value is ${row[0]}`);
+                    break; //will need to return winning data instead of 'break' commands (true/false, winning shape)
+                } else if (row.includes('X') && row.includes('O')){
+                    rowCheck.push(false);
+                    console.log(rowCheck);
+                }
+            }
+        };      
 
         //check for vertical wins
         for (i = 0; i < gameBoard.fullGameBoard.length; i++) {
-        
+            columnCheck[i].push(gameBoard.fullGameBoard[0][i], gameBoard.fullGameBoard[1][i], gameBoard.fullGameBoard[2][i])
+
             if ((gameBoard.fullGameBoard[0][i] !== null &&
-                gameBoard.fullGameBoard[0][i] === gameBoard.fullGameBoard[1][i] )
-                && (gameBoard.fullGameBoard[1][i] === gameBoard.fullGameBoard[2][i])) {
-                    console.log(`column number ${i} won!`);
-                    break; //will need to return winning data instead of 'break' commands (true/false, winning shape)
-                }
+            gameBoard.fullGameBoard[0][i] === gameBoard.fullGameBoard[1][i] )
+            && (gameBoard.fullGameBoard[1][i] === gameBoard.fullGameBoard[2][i])) {
+                console.log(`column number ${i} won!`);
+                break; //will need to return winning data instead of 'break' commands (true/false, winning shape)
+            } else if (columnCheck[i].includes("X") && columnCheck[i].includes("O")) {
+                columnCheck[3].push(false);
+            }
         }
 
         //check for diagonal wins
@@ -56,15 +70,24 @@ function gameFlow() {
 
         if (diagonalCheckLeft.every((value) => value === diagonalCheckLeft[0] && value !== null)) {
             console.log('wahoo!');
-            //will need to return winning data instead of 'break' commands (true/false, winning shape)
-            
-        } 
+            //will need to return winning data instead of 'break' commands (true/false, winning shape)    
+        } else if (diagonalCheckLeft.includes('X') && diagonalCheckLeft.includes('O')) {
+            diagonalCheckLeft = false;
+        }
         
         if (diagonalCheckRight.every((value) => value === diagonalCheckRight[0] && value !== null)) {
             console.log('oohaw!');
             //will need to return winning data instead of 'break' commands (true/false, winning shape)
+        } else if (diagonalCheckRight.includes('X') && diagonalCheckRight.includes('O')) {
+            diagonalCheckRight = false;
         }
 
+        horizontalWin();
+
+        if (rowCheck.length === 3 && columnCheck[3].length === 3 
+            && diagonalCheckLeft === false && diagonalCheckRight === false) {
+            console.log('tie!!')
+        }
 
         //add a check for a 'tie' scenario as well! 
 
