@@ -30,7 +30,6 @@ function gameFlow() {
         let rowCheck = [];
         let columnCheck = [[], [], [], []];
 
-        //check for horizontal wins
         const horizontalWin = function() {
             for (const row of gameBoard.fullGameBoard) {
                 console.log(row);
@@ -45,52 +44,53 @@ function gameFlow() {
             }
         };      
 
-        //check for vertical wins
-        for (i = 0; i < gameBoard.fullGameBoard.length; i++) {
-            columnCheck[i].push(gameBoard.fullGameBoard[0][i], gameBoard.fullGameBoard[1][i], gameBoard.fullGameBoard[2][i])
+        const verticalWin = function() {
+            for (i = 0; i < gameBoard.fullGameBoard.length; i++) {
+                columnCheck[i].push(gameBoard.fullGameBoard[0][i], gameBoard.fullGameBoard[1][i], gameBoard.fullGameBoard[2][i])
 
-            if ((gameBoard.fullGameBoard[0][i] !== null &&
-            gameBoard.fullGameBoard[0][i] === gameBoard.fullGameBoard[1][i] )
-            && (gameBoard.fullGameBoard[1][i] === gameBoard.fullGameBoard[2][i])) {
-                console.log(`column number ${i} won!`);
-                break; //will need to return winning data instead of 'break' commands (true/false, winning shape)
-            } else if (columnCheck[i].includes("X") && columnCheck[i].includes("O")) {
-                columnCheck[3].push(false);
+                if ((gameBoard.fullGameBoard[0][i] !== null &&
+                gameBoard.fullGameBoard[0][i] === gameBoard.fullGameBoard[1][i] )
+                && (gameBoard.fullGameBoard[1][i] === gameBoard.fullGameBoard[2][i])) {
+                    console.log(`column number ${i} won!`);
+                    break; //will need to return winning data instead of 'break' commands (true/false, winning shape)
+                } else if (columnCheck[i].includes("X") && columnCheck[i].includes("O")) {
+                    columnCheck[3].push(false);
+                }
             }
         }
 
-        //check for diagonal wins
-        for (i = 0; i < gameBoard.fullGameBoard.length; i++) {
+        const diagonalWin = function() {
+            for (i = 0; i < gameBoard.fullGameBoard.length; i++) {
             diagonalCheckLeft.push(gameBoard.fullGameBoard[i][i]);
             diagonalCheckRight.push(gameBoard.fullGameBoard[i][2-i])
-        }
+            }
 
-        console.log('left diagonal is', diagonalCheckLeft);
-        console.log('right diagonal is', diagonalCheckRight);
-
-        if (diagonalCheckLeft.every((value) => value === diagonalCheckLeft[0] && value !== null)) {
-            console.log('wahoo!');
-            //will need to return winning data instead of 'break' commands (true/false, winning shape)    
-        } else if (diagonalCheckLeft.includes('X') && diagonalCheckLeft.includes('O')) {
-            diagonalCheckLeft = false;
+            if (diagonalCheckLeft.every((value) => value === diagonalCheckLeft[0] && value !== null)) {
+                console.log('wahoo!');
+                //will need to return winning data instead of 'break' commands (true/false, winning shape)    
+            } else if (diagonalCheckLeft.includes('X') && diagonalCheckLeft.includes('O')) {
+                diagonalCheckLeft = false;
+            }
+            
+            if (diagonalCheckRight.every((value) => value === diagonalCheckRight[0] && value !== null)) {
+                console.log('oohaw!');
+                //will need to return winning data instead of 'break' commands (true/false, winning shape)
+            } else if (diagonalCheckRight.includes('X') && diagonalCheckRight.includes('O')) {
+                diagonalCheckRight = false;
+            }
         }
         
-        if (diagonalCheckRight.every((value) => value === diagonalCheckRight[0] && value !== null)) {
-            console.log('oohaw!');
-            //will need to return winning data instead of 'break' commands (true/false, winning shape)
-        } else if (diagonalCheckRight.includes('X') && diagonalCheckRight.includes('O')) {
-            diagonalCheckRight = false;
+        const tieCheck = function() {
+            if (rowCheck.length === 3 && columnCheck[3].length === 3 
+            && diagonalCheckLeft === false && diagonalCheckRight === false) {
+                console.log('tie!!')
+            }
         }
 
         horizontalWin();
-
-        if (rowCheck.length === 3 && columnCheck[3].length === 3 
-            && diagonalCheckLeft === false && diagonalCheckRight === false) {
-            console.log('tie!!')
-        }
-
-        //add a check for a 'tie' scenario as well! 
-
+        verticalWin();
+        diagonalWin();
+        tieCheck();
     }
 
     return { checkWin };
