@@ -33,7 +33,7 @@ function gameFlow() {
         const horizontalWin = function() {
             for (const row of gameBoard.fullGameBoard) {
                 console.log(row);
-                if (row.every((value) => value === row[0] && value !== null)) {
+                if (row.every((value) => value === row[0] && value !== undefined)) {
                     console.log('meow', gameBoard.fullGameBoard.indexOf(row));
                     console.log(`winning value is ${row[0]}`);
                     break; //will need to return winning data instead of 'break' commands (true/false, winning shape)
@@ -48,7 +48,7 @@ function gameFlow() {
             for (i = 0; i < gameBoard.fullGameBoard.length; i++) {
                 columnCheck[i].push(gameBoard.fullGameBoard[0][i], gameBoard.fullGameBoard[1][i], gameBoard.fullGameBoard[2][i])
 
-                if ((gameBoard.fullGameBoard[0][i] !== null &&
+                if ((gameBoard.fullGameBoard[0][i] !== undefined &&
                 gameBoard.fullGameBoard[0][i] === gameBoard.fullGameBoard[1][i] )
                 && (gameBoard.fullGameBoard[1][i] === gameBoard.fullGameBoard[2][i])) {
                     console.log(`column number ${i} won!`);
@@ -65,14 +65,14 @@ function gameFlow() {
             diagonalCheckRight.push(gameBoard.fullGameBoard[i][2-i])
             }
 
-            if (diagonalCheckLeft.every((value) => value === diagonalCheckLeft[0] && value !== null)) {
+            if (diagonalCheckLeft.every((value) => value === diagonalCheckLeft[0] && value !== undefined)) {
                 console.log('wahoo!');
                 //will need to return winning data instead of 'break' commands (true/false, winning shape)    
             } else if (diagonalCheckLeft.includes('X') && diagonalCheckLeft.includes('O')) {
                 diagonalCheckLeft = false;
             }
             
-            if (diagonalCheckRight.every((value) => value === diagonalCheckRight[0] && value !== null)) {
+            if (diagonalCheckRight.every((value) => value === diagonalCheckRight[0] && value !== undefined)) {
                 console.log('oohaw!');
                 //will need to return winning data instead of 'break' commands (true/false, winning shape)
             } else if (diagonalCheckRight.includes('X') && diagonalCheckRight.includes('O')) {
