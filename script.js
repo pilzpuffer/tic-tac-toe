@@ -13,9 +13,9 @@ winning scenarios:
 */
 
 const gameBoard = function (){
-    let fullGameBoard = [['O', 'O', "X"], 
-                        ["X", 'X', "O"], 
-                        ['O', 'X', 'X']];
+    let fullGameBoard = [[], 
+                        [], 
+                        []];
                         
     //those values will need to be tied to the actual DOM elements + display update should be handled here... 
     //maybe can be done through 'data' attributes on divs?
@@ -32,8 +32,8 @@ function gameFlow() {
 
         const horizontalWin = function() {
             for (const row of gameBoard.fullGameBoard) {
-                console.log(row);
-                if (row.every((value) => value === row[0] && value !== undefined)) {
+                if (typeof row !== 'undefined' && row.length === 3
+                    && row.every((value) => value === row[0])) {
                     console.log('meow', gameBoard.fullGameBoard.indexOf(row));
                     console.log(`winning value is ${row[0]}`);
                     break; //will need to return winning data instead of 'break' commands (true/false, winning shape)
@@ -62,7 +62,7 @@ function gameFlow() {
         const diagonalWin = function() {
             for (i = 0; i < gameBoard.fullGameBoard.length; i++) {
             diagonalCheckLeft.push(gameBoard.fullGameBoard[i][i]);
-            diagonalCheckRight.push(gameBoard.fullGameBoard[i][2-i])
+            diagonalCheckRight.push(gameBoard.fullGameBoard[i][(gameBoard.fullGameBoard.length-1)-i])
             }
 
             if (diagonalCheckLeft.every((value) => value === diagonalCheckLeft[0] && value !== undefined)) {
@@ -100,12 +100,21 @@ function player (name, shape) {
     const playerName = name || `Player ${shape}`;
     const chosenShape = shape;
 
-    const placeShape = function () {
+    const placeShape = function (row, column) {
         //will be attached to an event listener for clicks on gameBoard - once clicked, will need to check 
         //if there's a shape already placed
         //if not - track whose turn it is, place shape, update fullGameBoard
         //then - run CheckWin to see if this was the 'winning' move
+
+        gameBoard.fullGameBoard[row][column] = chosenShape;
+        let runGame = gameFlow();
+        runGame.checkWin();
     }
 
     return {  playerName, chosenShape, placeShape };
 }
+
+//added for testing
+
+let playerOne = player('Jenn', 'X');
+let playerTwo = player('Rozy', 'O');
