@@ -1,14 +1,14 @@
 @font-face {
     font-family: 'Raleway';
-    src: url('Raleway-Thin.woff2') format('woff2'),
-        url('Raleway-Thin.woff') format('woff');
+    src: url('./font-assets/Raleway/Raleway-Thin.woff2') format('woff2'),
+        url('./font-assets/Raleway/Raleway-Thin.woff') format('woff');
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Raleway';
-    src: url('Raleway-ThinItalic.woff2') format('woff2'),
-        url('Raleway-ThinItalic.woff') format('woff');
+    src: url('./font-assets/Raleway/Raleway-ThinItalic.woff2') format('woff2'),
+        url('./font-assets/Raleway/Raleway-ThinItalic.woff') format('woff');
     font-style: italic;
 }
 
@@ -49,12 +49,23 @@ h1, h2, h3, h4, h5, h6 {
   text-wrap: balance;
 }
 
-body {
+body, html {
     background-color: black;
     color: white;
 
     height: 100vh;
     width: 100vw;
+
+    font-family: "Raleway";
+}
+
+body {
+    place-content: center;
+}
+
+.game-content {
+    margin: 10rem;
+    height: fit-content;
 }
 
 .game-board {
@@ -81,4 +92,30 @@ body {
 
 .game-board > div:nth-child(3n) {
     border-right:none;
+}
+
+.game-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+
+    place-self: center;
+
+    margin-top: 4rem;
+
+    font-size: 1.8rem;
+}
+
+/* this effect should be used for the player who is currently 'active' */
+.highlight {
+    font-weight: bold;
+}
+
+.score {
+    font-size: 3.2rem;
+}
+
+.game-stats > div {
+    display: grid;
+    justify-items: center;
 }
