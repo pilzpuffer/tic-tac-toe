@@ -13,17 +13,31 @@ winning scenarios:
 */
 
 const gameBoard = function (){
-    let fullGameBoard = [[], 
+    let gameValues = [[], 
                         [], 
                         []];
+    
+    let allCells = document.querySelectorAll(".game-cell");
+    //need to add tracking for the current player - can be added to gameFlow?
+    // allCells.forEach(function(cell) {
+    //     cell.addEventListener('click', playerOne.placeShape(cell.dataset.row, cell.dataset.column))
+    // })
                         
     //those values will need to be tied to the actual DOM elements + display update should be handled here... 
-    //maybe can be done through 'data' attributes on divs?
-    return { fullGameBoard }
+    return { gameValues }
 }();
 
 function gameFlow() {
     //run the code below anytime a new shape is placed on gameboard! checks are done for row with defined values
+   
+    return { checkWin };
+}
+
+function player (name, shape) {
+    const playerName = name || `Player ${shape}`;
+    const chosenShape = shape;
+    let movesMade = 0;
+
     const checkWin = function() {
         let diagonalCheckLeft = [];
         let diagonalCheckRight = [];
@@ -31,10 +45,10 @@ function gameFlow() {
         let columnCheck = [[], [], [], []];
 
         const horizontalWin = function() {
-            for (const row of gameBoard.fullGameBoard) {
+            for (const row of gameBoard.gameValues) {
                 if (typeof row !== 'undefined' && row.length === 3
                     && row.every((value) => value === row[0])) {
-                    console.log('meow', gameBoard.fullGameBoard.indexOf(row));
+                    console.log('meow', gameBoard.gameValues.indexOf(row));
                     console.log(`winning value is ${row[0]}`);
                     break; //will need to return winning data instead of 'break' commands (true/false, winning shape)
                 } else if (row.includes('X') && row.includes('O')){
@@ -45,12 +59,12 @@ function gameFlow() {
         };      
 
         const verticalWin = function() {
-            for (i = 0; i < gameBoard.fullGameBoard.length; i++) {
-                columnCheck[i].push(gameBoard.fullGameBoard[0][i], gameBoard.fullGameBoard[1][i], gameBoard.fullGameBoard[2][i])
+            for (i = 0; i < gameBoard.gameValues.length; i++) {
+                columnCheck[i].push(gameBoard.gameValues[0][i], gameBoard.gameValues[1][i], gameBoard.gameValues[2][i])
 
-                if ((gameBoard.fullGameBoard[0][i] !== undefined &&
-                gameBoard.fullGameBoard[0][i] === gameBoard.fullGameBoard[1][i] )
-                && (gameBoard.fullGameBoard[1][i] === gameBoard.fullGameBoard[2][i])) {
+                if ((gameBoard.gameValues[0][i] !== undefined &&
+                gameBoard.gameValues[0][i] === gameBoard.gameValues[1][i] )
+                && (gameBoard.gameValues[1][i] === gameBoard.gameValues[2][i])) {
                     console.log(`column number ${i} won!`);
                     break; //will need to return winning data instead of 'break' commands (true/false, winning shape) -> display a modal with 'win' message
                 } else if (columnCheck[i].includes("X") && columnCheck[i].includes("O")) {
@@ -60,9 +74,9 @@ function gameFlow() {
         }
 
         const diagonalWin = function() {
-            for (i = 0; i < gameBoard.fullGameBoard.length; i++) {
-            diagonalCheckLeft.push(gameBoard.fullGameBoard[i][i]);
-            diagonalCheckRight.push(gameBoard.fullGameBoard[i][(gameBoard.fullGameBoard.length-1)-i])
+            for (i = 0; i < gameBoard.gameValues.length; i++) {
+            diagonalCheckLeft.push(gameBoard.gameValues[i][i]);
+            diagonalCheckRight.push(gameBoard.gameValues[i][(gameBoard.gameValues.length-1)-i])
             }
 
             if (diagonalCheckLeft.every((value) => value === diagonalCheckLeft[0] && value !== undefined)) {
@@ -93,25 +107,18 @@ function gameFlow() {
         tieCheck();
     }
 
-    return { checkWin };
-}
-
-function player (name, shape) {
-    const playerName = name || `Player ${shape}`;
-    const chosenShape = shape;
-
     const placeShape = function (row, column) {
         //will be attached to an event listener for clicks on gameBoard - once clicked, will need to check 
         //if there's a shape already placed
-        //if not - track whose turn it is at the time, place shape, update fullGameBoard
+        //if not - track whose turn it is at the time, place shape, update gameValues
         //then - run CheckWin to see if this was the 'winning' move
 
-        gameBoard.fullGameBoard[row][column] = chosenShape;
-        let runGame = gameFlow();
-        runGame.checkWin();
+        gameBoard.gameValues[row][column] = chosenShape;
+        checkWin();
+        movesMade++;
     }
 
-    return {  playerName, chosenShape, placeShape };
+    return {  playerName, chosenShape, placeShape, movesMade };
 }
 
 //added for testing
