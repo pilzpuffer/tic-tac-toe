@@ -1,3 +1,18 @@
+@font-face {
+    font-family: 'Raleway';
+    src: url('Raleway-Thin.woff2') format('woff2'),
+        url('Raleway-Thin.woff') format('woff');
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Raleway';
+    src: url('Raleway-ThinItalic.woff2') format('woff2'),
+        url('Raleway-ThinItalic.woff') format('woff');
+    font-style: italic;
+}
+
+
 *, *::before, *::after {
   box-sizing: border-box;
 }
