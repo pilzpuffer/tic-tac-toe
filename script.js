@@ -16,6 +16,13 @@ const gameBoard = function (){
     let gameValues = [[], 
                         [], 
                         []];
+
+    let reset = document.querySelector("#reset");
+    reset.addEventListener('click', function() { 
+        for (const row of gameBoard.gameValues) {
+            row.length = 0;
+        }
+    });
     
     let allCells = document.querySelectorAll(".game-cell");
     //need to add tracking for the current player - can be added to gameFlow?
