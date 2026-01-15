@@ -16,6 +16,20 @@ const gameBoard = function (){
     let gameValues = [[], 
                         [], 
                         []];
+    let scores = {
+        playerOne: 0,
+        playerTwo: 0,
+        tie: 0
+    }
+
+    let playerOneScoreDisplay = document.querySelector("#first-player .score");
+    let tieScoreDisplay = document.querySelector("#tie .score");
+    let playerTwoScoreDisplay = document.querySelector("#second-player .score");
+
+    playerOneScoreDisplay.textContent = scores.playerOne;
+    tieScoreDisplay.textContent = scores.tie;
+    playerTwoScoreDisplay.textContent = scores.playerTwo;
+
 
     let reset = document.querySelector("#reset");
     reset.addEventListener('click', function() { 
@@ -31,7 +45,7 @@ const gameBoard = function (){
     // })
                         
     //those values will need to be tied to the actual DOM elements + display update should be handled here... 
-    return { gameValues }
+    return { gameValues, scores }
 }();
 
 function gameFlow() {
