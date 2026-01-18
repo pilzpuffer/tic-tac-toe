@@ -37,25 +37,11 @@ const gameBoard = function (){
             row.length = 0;
         }
     });
-    
-    let allCells = document.querySelectorAll(".game-cell");
-    //need to add tracking for the current player - can be added to gameFlow?
-    // allCells.forEach(function(cell) {
-    //     cell.addEventListener('click', playerOne.placeShape(cell.dataset.row, cell.dataset.column))
-    // })
-                        
-    //those values will need to be tied to the actual DOM elements + display update should be handled here... 
     return { gameValues, scores }
 }();
 
-function gameFlow() {
-    //run the code below anytime a new shape is placed on gameboard! checks are done for row with defined values
-   
-    return { checkWin };
-}
-
 function player (name, shape) {
-    const playerName = name || `Player ${shape}`;
+    const playerName = name;
     const chosenShape = shape;
     let movesMade = 0;
 
@@ -134,14 +120,36 @@ function player (name, shape) {
         //if not - track whose turn it is at the time, place shape, update gameValues
         //then - run CheckWin to see if this was the 'winning' move
 
-        gameBoard.gameValues[row][column] = chosenShape;
-        checkWin();
-        movesMade++;
+        if (gameBoard.gameValues[row][column] === 'undefined') {
+            gameBoard.gameValues[row][column] = chosenShape;
+            checkWin();
+            movesMade++;
+        } else {
+            //play some kind of error sound
+        }
+        
     }
 
     return {  playerName, chosenShape, placeShape, movesMade };
 }
 
-//added for testing
+function gameFlow() {
+
+let allCells = document.querySelectorAll(".game-cell");
+    // allCells.forEach(function(cell) {
+    //     cell.addEventListener('click', playerOne.placeShape(cell.dataset.row, cell.dataset.column))
+    // })
+                        
+    //those values will need to be tied to the actual DOM elements + display update should be handled here... 
+   
+
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    let introductions = document.querySelector("#get-info");
+    introductions.showModal();
+})
+
+//added for testing - will need to add a modal that will pop up on page load and ask the player for their names
 let playerOne = player('Jenn', 'X');
 let playerTwo = player('Rozy', 'O');

@@ -138,3 +138,50 @@ body {
   display: grid;
   justify-items: center;
 }
+
+.shape-choice-container {
+  --hover: #494b4f;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 1.25rem;
+}
+
+.shape-choice-heading {
+  color: var(--heading-color);
+}
+
+.shape-choice-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.shape-choice-wrapper .input {
+  display: none;
+}
+
+.shape-choice {
+  flex-grow: 1;
+  text-align: center;
+  padding: 0.75rem;
+  background: white;
+  border: 1px solid black;
+  cursor: pointer;
+  transition: 0.2s ease-in-out; 
+}
+
+.shape-choice[for="O"] {
+  content: url('./image-assets/circle.svg')
+}
+
+.shape-choice[for="X"] {
+  content: url('./image-assets/cross.svg')
+}
+.shape-choice:hover {
+  background: var(--hover);
+  border-color: var(--hover);
+}
+
+.input:checked + label.shape-choice {
+  filter:invert(1);
+}

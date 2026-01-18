@@ -38,5 +38,32 @@
 
             <button id="reset"></button>
         </div> 
+
+        <dialog id="get-info">
+            <form>
+                
+                <label for="player-one">First player's name:</label>
+                <input type="text" name="player-one" id="player-one" required>
+
+                <label for="player-two">Second player's name</label>
+                <input type="text" name="player-two" id="player-two">
+                
+                
+                <!-- button options? think on styling for this-->
+
+                <div class="shape-choice-container">
+                <div class="shape-choice-heading">Pick a shape:</div>
+                <div class="shape-choice-wrapper">
+                    <input class="input" id="X" value="X" name="shape" type="radio" />
+                    <label class="shape-choice" for="X"></label>
+                    <input class="input" id="O" value="O" name="shape" type="radio" />
+                    <label class="shape-choice" for="O"></label>
+                </div>
+                </div>
+
+                
+                <button>Start the game!</button>
+            </form>
+        </dialog>
 </body>
 </html>
