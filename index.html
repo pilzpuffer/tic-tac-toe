@@ -42,27 +42,38 @@
         <dialog id="get-info">
             <form>
                 
-                <label for="player-one">First player's name:</label>
-                <input type="text" name="player-one" id="player-one" required>
+                    <div class="player-name">
+                        <label for="player-one">First player's name:</label>
+                        <input type="text" name="player-one" id="player-one" maxlength="12" required>
+                    </div>
 
-                <label for="player-two">Second player's name</label>
-                <input type="text" name="player-two" id="player-two">
-                
-                
-                <!-- button options? think on styling for this-->
+                    <div class="shape-choice-container">
+                    <div class="shape-choice-heading">Pick a shape:</div>
+                            <div class="shape-choice-wrapper">
+                                <input class="input" id="X-one" value="X" name="shape-one" type="radio" />
+                                <label class="shape-choice" for="X-one"></label>
+                                <input class="input" id="O-one" value="O" name="shape-one" type="radio" />
+                                <label class="shape-choice" for="O-one"></label>
+                            </div>
+                    </div>
 
-                <div class="shape-choice-container">
-                <div class="shape-choice-heading">Pick a shape:</div>
-                <div class="shape-choice-wrapper">
-                    <input class="input" id="X" value="X" name="shape" type="radio" />
-                    <label class="shape-choice" for="X"></label>
-                    <input class="input" id="O" value="O" name="shape" type="radio" />
-                    <label class="shape-choice" for="O"></label>
-                </div>
-                </div>
+
+                    <div class="player-name">
+                        <label for="player-two">Second player's name</label>
+                        <input type="text" name="player-two" id="player-two" maxlength="12" required>
+                    </div>
+                    <div class="shape-choice-container">
+                    <div class="shape-choice-heading">Pick a shape:</div>
+                        <div class="shape-choice-wrapper">
+                            <input class="input" id="X-two" value="X" name="shape-two" type="radio" />
+                            <label class="shape-choice" for="X-two"></label>
+                            <input class="input" id="O-two" value="O" name="shape-two" type="radio" />
+                            <label class="shape-choice" for="O-two"></label>
+                        </div>
+                    </div>
 
                 
-                <button>Start the game!</button>
+                <button id="start">Start the game!</button>
             </form>
         </dialog>
 </body>

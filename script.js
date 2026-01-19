@@ -153,3 +153,6 @@ document.addEventListener('DOMContentLoaded', function() {
 //added for testing - will need to add a modal that will pop up on page load and ask the player for their names
 let playerOne = player('Jenn', 'X');
 let playerTwo = player('Rozy', 'O');
+
+//add an event listener for shape selectors in the initial player creation modal - disable the same kind of shape
+//from the diffenent optgroup
