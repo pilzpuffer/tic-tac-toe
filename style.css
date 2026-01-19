@@ -84,6 +84,8 @@ body {
 .game-board > div {
   border-bottom: 5px solid var(--contrasting-background);
   border-right: 5px solid var(--contrasting-background);
+  height: 100%;
+  aspect-ratio: 1/1;
   margin-left: -5px;
   margin-bottom: -5px;
 }
@@ -231,11 +233,11 @@ label, .shape-choice-heading {
 }
 
 .placeX {
-  background-image: url(./image-assets/cross.svg);
   filter: invert(1);
 }
 
 .placeO {
   background-image: url(./image-assets/circle.svg);
+  background-origin: border-box;
   filter: invert(1);
 }

@@ -30,12 +30,17 @@ const gameBoard = function (){
     tieScoreDisplay.textContent = scores.tie;
     playerTwoScoreDisplay.textContent = scores.playerTwo;
 
+    let allGameCells = document.querySelectorAll('.game-cell');
 
     let reset = document.querySelector("#reset");
     reset.addEventListener('click', function() { 
         for (const row of gameBoard.gameValues) {
             row.length = 0;
         }
+
+        allGameCells.forEach(function(cell) {
+            cell.replaceChildren();
+        })
     });
     return { gameValues, scores }
 }();
@@ -146,7 +151,11 @@ let allCells = document.querySelectorAll(".game-cell");
     allCells.forEach(function(cell) {
         cell.addEventListener('click', function (event) {
             playerOne.placeShape(cell.dataset.row, cell.dataset.column);
-            cell.classList.add("placeX") 
+            let shapeX = document.createElement("img");
+            shapeX.setAttribute("src", './image-assets/cross.svg');
+            shapeX.classList.add("placeX");
+            cell.appendChild(shapeX);
+            // cell.classList.add("placeX"); 
             console.log(cell, event.target)
         } )
       
