@@ -119,13 +119,15 @@ function player (name, shape) {
         //if there's a shape already placed
         //if not - track whose turn it is at the time, place shape, update gameValues
         //then - run CheckWin to see if this was the 'winning' move
+        
 
-        if (gameBoard.gameValues[row][column] === 'undefined') {
+        if (!gameBoard.gameValues[row][column] || gameBoard.gameValues[row][column] === 'undefined') {
             gameBoard.gameValues[row][column] = chosenShape;
             checkWin();
             movesMade++;
         } else {
-            //play some kind of error sound
+            console.log('there`s some kind of issue here...')
+            //play an error sign maybe
         }
         
     }
@@ -133,26 +135,34 @@ function player (name, shape) {
     return {  playerName, chosenShape, placeShape, movesMade };
 }
 
-function gameFlow() {
+let playerOne = player('Jenn', 'X');
+let playerTwo = player('Rozy', 'O');
+
+
+const gameFlow = function () {
+    //player creation AND current player tracking should be managed here
 
 let allCells = document.querySelectorAll(".game-cell");
-    // allCells.forEach(function(cell) {
-    //     cell.addEventListener('click', playerOne.placeShape(cell.dataset.row, cell.dataset.column))
-    // })
+    allCells.forEach(function(cell) {
+        cell.addEventListener('click', function (event) {
+            playerOne.placeShape(cell.dataset.row, cell.dataset.column);
+            cell.classList.add("placeX") 
+            console.log(cell, event.target)
+        } )
+      
+    })
                         
     //those values will need to be tied to the actual DOM elements + display update should be handled here... 
    
 
-}
+}();
 
-document.addEventListener('DOMContentLoaded', function() {
-    let introductions = document.querySelector("#get-info");
-    introductions.showModal();
-})
+// document.addEventListener('DOMContentLoaded', function() {
+//     let introductions = document.querySelector("#get-info");
+//     introductions.showModal();
+// })
 
 //added for testing - will need to add a modal that will pop up on page load and ask the player for their names
-let playerOne = player('Jenn', 'X');
-let playerTwo = player('Rozy', 'O');
 
 //add an event listener for shape selectors in the initial player creation modal - disable the same kind of shape
 //from the diffenent optgroup

@@ -190,7 +190,7 @@ label, .shape-choice-heading {
 
 .shape-choice, #start  {
   text-align: center;
-  padding: 0.75rem;
+  padding: 0.763rem;
   background: var(--contrasting-background);
   border: 1px solid var(--main-accent);
   cursor: pointer;
@@ -230,3 +230,12 @@ label, .shape-choice-heading {
   align-self: end;
 }
 
+.placeX {
+  background-image: url(./image-assets/cross.svg);
+  filter: invert(1);
+}
+
+.placeO {
+  background-image: url(./image-assets/circle.svg);
+  filter: invert(1);
+}
