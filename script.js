@@ -22,6 +22,8 @@ const gameBoard = function (){
         tie: 0
     }
 
+    let movesMade = 0;
+
     let playerOneScoreDisplay = document.querySelector("#first-player .score");
     let tieScoreDisplay = document.querySelector("#tie .score");
     let playerTwoScoreDisplay = document.querySelector("#second-player .score");
@@ -42,13 +44,12 @@ const gameBoard = function (){
             cell.replaceChildren();
         })
     });
-    return { gameValues, scores }
+    return { gameValues, scores, playerOneScoreDisplay, playerTwoScoreDisplay, tieScoreDisplay, movesMade}
 }();
 
 function player (name, shape) {
     const playerName = name;
     const chosenShape = shape;
-    let movesMade = 0;
 
     const checkWin = function() {
         let diagonalCheckLeft = [];
@@ -62,7 +63,7 @@ function player (name, shape) {
                     && row.every((value) => value === row[0])) {
                     console.log('meow', gameBoard.gameValues.indexOf(row));
                     console.log(`winning value is ${row[0]}`);
-                    break; //will need to return winning data instead of 'break' commands (true/false, winning shape)
+                     //will need to return winning data instead of 'break' commands (true/false, winning shape)
                 } else if (row.includes('X') && row.includes('O')){
                     rowCheck.push(false);
                     console.log(rowCheck);
@@ -78,7 +79,7 @@ function player (name, shape) {
                 gameBoard.gameValues[0][i] === gameBoard.gameValues[1][i] )
                 && (gameBoard.gameValues[1][i] === gameBoard.gameValues[2][i])) {
                     console.log(`column number ${i} won!`);
-                    break; //will need to return winning data instead of 'break' commands (true/false, winning shape) -> display a modal with 'win' message
+                     //will need to return winning data instead of 'break' commands (true/false, winning shape) -> display a modal with 'win' message
                 } else if (columnCheck[i].includes("X") && columnCheck[i].includes("O")) {
                     columnCheck[3].push(false);
                 }
@@ -93,6 +94,7 @@ function player (name, shape) {
 
             if (diagonalCheckLeft.every((value) => value === diagonalCheckLeft[0] && value !== undefined)) {
                 console.log('wahoo!');
+                
                 //will need to return winning data instead of 'break' commands (true/false, winning shape) -> display a modal with 'win' message  
             } else if (diagonalCheckLeft.includes('X') && diagonalCheckLeft.includes('O')) {
                 diagonalCheckLeft = false;
@@ -100,6 +102,7 @@ function player (name, shape) {
             
             if (diagonalCheckRight.every((value) => value === diagonalCheckRight[0] && value !== undefined)) {
                 console.log('oohaw!');
+                
                 //will need to return winning data instead of 'break' commands (true/false, winning shape) -> display a modal with 'win' message
             } else if (diagonalCheckRight.includes('X') && diagonalCheckRight.includes('O')) {
                 diagonalCheckRight = false;
@@ -109,7 +112,8 @@ function player (name, shape) {
         const tieCheck = function() {
             if (rowCheck.length === 3 && columnCheck[3].length === 3 
             && diagonalCheckLeft === false && diagonalCheckRight === false) {
-                console.log('tie!!')
+                gameBoard.scores.playerOne++;
+                gameBoard.playerOneScoreDisplay.textContent = gameBoard.scores.playerOne;
             }
         }
 
@@ -129,7 +133,8 @@ function player (name, shape) {
         if (!gameBoard.gameValues[row][column] || gameBoard.gameValues[row][column] === 'undefined') {
             gameBoard.gameValues[row][column] = chosenShape;
             checkWin();
-            movesMade++;
+            gameBoard.movesMade++;
+
         } else {
             console.log('there`s some kind of issue here...')
             //play an error sign maybe
@@ -137,7 +142,7 @@ function player (name, shape) {
         
     }
 
-    return {  playerName, chosenShape, placeShape, movesMade };
+    return {  playerName, chosenShape, placeShape };
 }
 
 let playerOne = player('Jenn', 'X');
@@ -147,16 +152,28 @@ let playerTwo = player('Rozy', 'O');
 const gameFlow = function () {
     //player creation AND current player tracking should be managed here
 
-let allCells = document.querySelectorAll(".game-cell");
+    let allCells = document.querySelectorAll(".game-cell");
     allCells.forEach(function(cell) {
         cell.addEventListener('click', function (event) {
-            playerOne.placeShape(cell.dataset.row, cell.dataset.column);
-            let shapeX = document.createElement("img");
-            shapeX.setAttribute("src", './image-assets/cross.svg');
-            shapeX.classList.add("placeX");
-            cell.appendChild(shapeX);
-            // cell.classList.add("placeX"); 
-            console.log(cell, event.target)
+            if (cell.childNodes.length === 0) {
+                let currentPlayer = gameBoard.movesMade % 2 === 0 ? playerOne : playerTwo;
+                
+                if (currentPlayer === playerOne) {
+                    playerOne.placeShape(cell.dataset.row, cell.dataset.column);
+                    let shapeX = document.createElement("img");
+                    shapeX.setAttribute("src", './image-assets/cross.svg');
+                    shapeX.classList.add("placeX");
+                    cell.appendChild(shapeX);
+                    playerOne.movesMade++;
+                } else if (currentPlayer === playerTwo){
+                    playerTwo.placeShape(cell.dataset.row, cell.dataset.column);
+                    let shapeO = document.createElement("img");
+                    shapeO.setAttribute("src", './image-assets/circle.svg');
+                    shapeO.classList.add("placeO");
+                    cell.appendChild(shapeO);
+                    playerTwo.movesMade++;
+                }
+            }
         } )
       
     })
