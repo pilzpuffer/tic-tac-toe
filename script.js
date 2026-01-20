@@ -173,11 +173,27 @@ let playerTwo = player('Rozy', 'O', 'playerTwo');
 
 
 const gameFlow = function () {
-    //player creation AND current player tracking should be managed here
-    // document.addEventListener('DOMContentLoaded', function() {
-    //     let introductions = document.querySelector("#get-info");
-    //     introductions.showModal();
-    // })
+    document.addEventListener('DOMContentLoaded', function() {
+        let introductions = document.querySelector("#get-info");
+        introductions.showModal();
+
+        let playerForm = document.querySelector("#get-info > form");
+        let gameStart = document.querySelector('#start');
+
+        gameStart.addEventListener('click', function(event) {
+            event.preventDefault();
+            const formData = new FormData(playerForm);
+            const formProps = Object.fromEntries(formData);
+
+            let firstName = document.querySelector("#first-player > .outcome");
+            firstName.textContent = `${formProps['player-one']} (${formProps['shape-one']})`;
+
+            let secondName = document.querySelector("#second-player > .outcome");
+            secondName.textContent = `${formProps['player-two']} (${formProps['shape-two']})`;
+
+            introductions.close()
+        })
+    })
 
     let allCells = document.querySelectorAll(".game-cell");
     allCells.forEach(function(cell) {
@@ -213,8 +229,4 @@ const gameFlow = function () {
         })
       
     })
-                        
-    //those values will need to be tied to the actual DOM elements + display update should be handled here... 
-   
-
 }();
