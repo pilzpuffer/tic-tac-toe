@@ -192,16 +192,16 @@ const gameFlow = function () {
                         shapeX.setAttribute("src", './image-assets/cross.svg');
                         shapeX.classList.add("placeX");
                         cell.appendChild(shapeX);
-                        playerOne.movesMade++;
                     } else if (currentPlayer === playerTwo){
                         playerTwo.placeShape(cell.dataset.row, cell.dataset.column);
                         let shapeO = document.createElement("img");
                         shapeO.setAttribute("src", './image-assets/circle.svg');
                         shapeO.classList.add("placeO");
                         cell.appendChild(shapeO);
-                        playerTwo.movesMade++;
                     }
-                } else if (gameBoard.boardWon === true) {
+                }     
+            } else if (gameBoard.boardWon === true) {
+                    console.log('wahoooo?...');
                     for (const row of gameBoard.gameValues) {
                     row.length = 0;
                     }
@@ -211,8 +211,6 @@ const gameFlow = function () {
                     })
 
                     gameBoard.boardWon = false;
-                }
-                
             }
         } )
       
