@@ -91,7 +91,7 @@ function player (name, shape, order) {
                 columnCheck[i].push(gameBoard.gameValues[0][i], gameBoard.gameValues[1][i], gameBoard.gameValues[2][i])
 
                 if ((gameBoard.gameValues[0][i] !== undefined &&
-                gameBoard.gameValues[0][i] === gameBoard.gameValues[1][i] )
+                gameBoard.gameValues[0][i] === gameBoard.gameValues[1][i])
                 && (gameBoard.gameValues[1][i] === gameBoard.gameValues[2][i])) {
                     console.log(`column number ${i} won!`);
                     gameBoard.boardWon = true;
@@ -149,25 +149,13 @@ function player (name, shape, order) {
     }
 
     const placeShape = function (row, column) {
-        //will be attached to an event listener for clicks on gameBoard - once clicked, will need to check 
-        //if there's a shape already placed
-        //if not - track whose turn it is at the time, place shape, update gameValues
-        //then - run CheckWin to see if this was the 'winning' move
-        
-
         if (gameBoard.boardWon === false && (!gameBoard.gameValues[row][column] || gameBoard.gameValues[row][column] === 'undefined')) {
             gameBoard.gameValues[row][column] = chosenShape;
             checkWin();
             if (gameBoard.boardWon === false) {
                 gameBoard.movesMade++;
             } 
-            
-
-        } else {
-            console.log('there`s some kind of issue here...')
-            //play an error sign maybe
         }
-        
     }
 
     return { playerName, chosenShape, playerOrder, placeShape };
@@ -201,7 +189,17 @@ const gameFlow = function () {
                 gameBoard.playerOneDisplay.classList.toggle('highlight');
             } else {
                 let warningMessage = document.querySelector("#warning");
-                warningMessage.textContent = 'Please select different shapes for each player!';
+
+                if (warningMessage.textContent.length === 0) {
+                    warningMessage.classList.add("shake");
+                    warningMessage.textContent = 'Please select different shapes for each player!';
+                } else {
+                    warningMessage.classList.remove('shake');
+                    setTimeout(() => {
+                        warningMessage.classList.add("shake");
+                    }, 200);    
+                }
+                
             }
         })
     })
