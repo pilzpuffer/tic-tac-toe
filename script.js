@@ -11,6 +11,8 @@ winning scenarios:
 [null x null]    [null x null]  -> diagonal victories           
 [null null x]    [x null null]                              [3][2][1]
 */
+let playerOne;
+let playerTwo;
 
 const gameBoard = function (){
     let gameValues = [[], 
@@ -44,7 +46,8 @@ const gameBoard = function (){
         allGameCells.forEach(function(cell) {
             cell.replaceChildren();
         })
-        gameBoard.boardWon = false 
+        gameBoard.boardWon = false;
+        gameBoard.movesMade = 0;
     });
     return { gameValues, scores, playerOneScoreDisplay, playerTwoScoreDisplay, tieScoreDisplay, movesMade, boardWon}
 }();
@@ -73,7 +76,6 @@ function player (name, shape, order) {
                     gameBoard.boardWon = true;
                     gameBoard.scores[`${currentPlayer.playerOrder}`]++;
                     gameBoard[`${currentPlayer.playerOrder}ScoreDisplay`].textContent = gameBoard.scores[`${currentPlayer.playerOrder}`];
-                     //will need to return winning data instead of 'break' commands (true/false, winning shape)
                 } else if (row.includes('X') && row.includes('O')){
                     rowCheck.push(false);
                     console.log(rowCheck);
@@ -165,14 +167,13 @@ function player (name, shape, order) {
         
     }
 
-    return {  playerName, chosenShape, playerOrder, placeShape };
+    return { playerName, chosenShape, playerOrder, placeShape };
 }
 
-let playerOne = player('Jenn', 'X', 'playerOne');
-let playerTwo = player('Rozy', 'O', 'playerTwo');
-
-
 const gameFlow = function () {
+    let playerOneDisplay = document.querySelector("#first-player");
+    let playerTwoDisplay = document.querySelector("#second-player");
+
     document.addEventListener('DOMContentLoaded', function() {
         let introductions = document.querySelector("#get-info");
         introductions.showModal();
@@ -182,6 +183,7 @@ const gameFlow = function () {
 
         gameStart.addEventListener('click', function(event) {
             event.preventDefault();
+
             const formData = new FormData(playerForm);
             const formProps = Object.fromEntries(formData);
 
@@ -192,7 +194,11 @@ const gameFlow = function () {
                 let secondName = document.querySelector("#second-player > .outcome");
                 secondName.textContent = `${formProps['player-two']} (${formProps['shape-two']})`;
 
+                playerOne = player(`${formProps['player-one']}`, `${formProps['shape-one']}`, 'playerOne');
+                playerTwo = player(`${formProps['player-two']}`, `${formProps['shape-two']}`, 'playerTwo');
+                
                 introductions.close()
+                playerOneDisplay.classList.toggle('highlight');
             } else {
                 let warningMessage = document.querySelector("#warning");
                 warningMessage.textContent = 'Please select different shapes for each player!';
@@ -206,19 +212,22 @@ const gameFlow = function () {
             let currentPlayer = gameBoard.movesMade % 2 === 0 ? playerOne : playerTwo;
 
             if (cell.childNodes.length === 0 && gameBoard.boardWon === false) {
-                if (currentPlayer === playerOne) {
-                    playerOne.placeShape(cell.dataset.row, cell.dataset.column);
+                if (currentPlayer.chosenShape === 'X') {
+                    currentPlayer.placeShape(cell.dataset.row, cell.dataset.column);
                     let shapeX = document.createElement("img");
                     shapeX.setAttribute("src", './image-assets/cross.svg');
                     shapeX.classList.add("placeX");
                     cell.appendChild(shapeX);
-                } else if (currentPlayer === playerTwo){
-                    playerTwo.placeShape(cell.dataset.row, cell.dataset.column);
+                } else if (currentPlayer.chosenShape === 'O'){
+                    currentPlayer.placeShape(cell.dataset.row, cell.dataset.column);
                     let shapeO = document.createElement("img");
                     shapeO.setAttribute("src", './image-assets/circle.svg');
                     shapeO.classList.add("placeO");
                     cell.appendChild(shapeO);
                 }
+
+                playerOneDisplay.classList.toggle('highlight');
+                playerTwoDisplay.classList.toggle('highlight');
                    
             } else if (gameBoard.boardWon === true) {
                 for (const row of gameBoard.gameValues) {
@@ -230,6 +239,7 @@ const gameFlow = function () {
                 })
 
                 gameBoard.boardWon = false;
+                gameBoard.movesMade = 0;
             }
         })
       

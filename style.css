@@ -129,7 +129,6 @@ body {
   margin-left: 2.5rem;
 }
 
-/* this effect should be used for the player who is currently 'active' */
 .highlight {
   font-weight: bold;
 }
