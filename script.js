@@ -210,6 +210,7 @@ const gameFlow = function () {
             let currentPlayer = gameBoard.movesMade % 2 === 0 ? gameBoard.playerOne : gameBoard.playerTwo;
 
             if (cell.childNodes.length === 0 && gameBoard.boardWon === false) {
+
                 if (currentPlayer.chosenShape === 'X') {
                     currentPlayer.placeShape(cell.dataset.row, cell.dataset.column);
                     let shapeX = document.createElement("img");
@@ -224,8 +225,10 @@ const gameFlow = function () {
                     cell.appendChild(shapeO);
                 }
 
-                gameBoard.playerOneDisplay.classList.toggle('highlight');
-                gameBoard.playerTwoDisplay.classList.toggle('highlight');
+                if (gameBoard.boardWon === false) {
+                    gameBoard.playerOneDisplay.classList.toggle('highlight');
+                    gameBoard.playerTwoDisplay.classList.toggle('highlight');
+                }
                    
             } else if (gameBoard.boardWon === true) {
                 for (const row of gameBoard.gameValues) {
