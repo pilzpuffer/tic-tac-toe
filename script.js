@@ -10,11 +10,7 @@ winning scenarios:
 [x null null]    [null null x]                              [1][2][3]
 [null x null]    [null x null]  -> diagonal victories           
 [null null x]    [x null null]                              [3][2][1]
-*/
-let playerOne;
-let playerTwo;
-
-const gameBoard = function (){
+*/const gameBoard = function (){
     let gameValues = [[], 
                         [], 
                         []];
@@ -23,9 +19,13 @@ const gameBoard = function (){
         playerTwo: 0,
         tie: 0
     }
-
+    let playerOne;
+    let playerTwo;
     let movesMade = 0;
     let boardWon = false;
+
+    let playerOneDisplay = document.querySelector("#first-player");
+    let playerTwoDisplay = document.querySelector("#second-player");
 
     let playerOneScoreDisplay = document.querySelector("#first-player .score");
     let tieScoreDisplay = document.querySelector("#tie .score");
@@ -48,8 +48,11 @@ const gameBoard = function (){
         })
         gameBoard.boardWon = false;
         gameBoard.movesMade = 0;
+        gameBoard.playerOneDisplay.classList.add('highlight');
+        gameBoard.playerTwoDisplay.classList.remove('highlight');
     });
-    return { gameValues, scores, playerOneScoreDisplay, playerTwoScoreDisplay, tieScoreDisplay, movesMade, boardWon}
+    return { gameValues, scores, playerOneDisplay, playerTwoDisplay, playerOneScoreDisplay, 
+            playerTwoScoreDisplay, tieScoreDisplay, movesMade, boardWon, playerOne, playerTwo}
 }();
 
 function player (name, shape, order) {
@@ -62,7 +65,7 @@ function player (name, shape, order) {
         let diagonalCheckRight = [];
         let rowCheck = [];
         let columnCheck = [[], [], [], []];
-        let currentPlayer = gameBoard.movesMade % 2 === 0 ? playerOne : playerTwo;
+        let currentPlayer = gameBoard.movesMade % 2 === 0 ? gameBoard.playerOne : gameBoard.playerTwo;
         console.log(currentPlayer);
 
         const horizontalWin = function() {
@@ -171,9 +174,6 @@ function player (name, shape, order) {
 }
 
 const gameFlow = function () {
-    let playerOneDisplay = document.querySelector("#first-player");
-    let playerTwoDisplay = document.querySelector("#second-player");
-
     document.addEventListener('DOMContentLoaded', function() {
         let introductions = document.querySelector("#get-info");
         introductions.showModal();
@@ -194,11 +194,11 @@ const gameFlow = function () {
                 let secondName = document.querySelector("#second-player > .outcome");
                 secondName.textContent = `${formProps['player-two']} (${formProps['shape-two']})`;
 
-                playerOne = player(`${formProps['player-one']}`, `${formProps['shape-one']}`, 'playerOne');
-                playerTwo = player(`${formProps['player-two']}`, `${formProps['shape-two']}`, 'playerTwo');
+                gameBoard.playerOne = player(`${formProps['player-one']}`, `${formProps['shape-one']}`, 'playerOne');
+                gameBoard.playerTwo = player(`${formProps['player-two']}`, `${formProps['shape-two']}`, 'playerTwo');
                 
                 introductions.close()
-                playerOneDisplay.classList.toggle('highlight');
+                gameBoard.playerOneDisplay.classList.toggle('highlight');
             } else {
                 let warningMessage = document.querySelector("#warning");
                 warningMessage.textContent = 'Please select different shapes for each player!';
@@ -209,7 +209,7 @@ const gameFlow = function () {
     let allCells = document.querySelectorAll(".game-cell");
     allCells.forEach(function(cell) {
         cell.addEventListener('click', function () {
-            let currentPlayer = gameBoard.movesMade % 2 === 0 ? playerOne : playerTwo;
+            let currentPlayer = gameBoard.movesMade % 2 === 0 ? gameBoard.playerOne : gameBoard.playerTwo;
 
             if (cell.childNodes.length === 0 && gameBoard.boardWon === false) {
                 if (currentPlayer.chosenShape === 'X') {
@@ -226,8 +226,8 @@ const gameFlow = function () {
                     cell.appendChild(shapeO);
                 }
 
-                playerOneDisplay.classList.toggle('highlight');
-                playerTwoDisplay.classList.toggle('highlight');
+                gameBoard.playerOneDisplay.classList.toggle('highlight');
+                gameBoard.playerTwoDisplay.classList.toggle('highlight');
                    
             } else if (gameBoard.boardWon === true) {
                 for (const row of gameBoard.gameValues) {
@@ -240,6 +240,8 @@ const gameFlow = function () {
 
                 gameBoard.boardWon = false;
                 gameBoard.movesMade = 0;
+                gameBoard.playerOneDisplay.classList.add('highlight');
+                gameBoard.playerTwoDisplay.classList.remove('highlight');
             }
         })
       
