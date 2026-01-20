@@ -49,15 +49,18 @@ const gameBoard = function (){
     return { gameValues, scores, playerOneScoreDisplay, playerTwoScoreDisplay, tieScoreDisplay, movesMade, boardWon}
 }();
 
-function player (name, shape) {
+function player (name, shape, order) {
     const playerName = name;
     const chosenShape = shape;
+    const playerOrder = order;
 
     const checkWin = function() {
         let diagonalCheckLeft = [];
         let diagonalCheckRight = [];
         let rowCheck = [];
         let columnCheck = [[], [], [], []];
+        let currentPlayer = gameBoard.movesMade % 2 === 0 ? playerOne : playerTwo;
+        console.log(currentPlayer);
 
         const horizontalWin = function() {
             for (const row of gameBoard.gameValues) {
@@ -68,6 +71,8 @@ function player (name, shape) {
                     console.log('meow', gameBoard.gameValues.indexOf(row));
                     console.log(`winning value is ${row[0]}`);
                     gameBoard.boardWon = true;
+                    gameBoard.scores[`${currentPlayer.playerOrder}`]++;
+                    gameBoard[`${currentPlayer.playerOrder}ScoreDisplay`].textContent = gameBoard.scores[`${currentPlayer.playerOrder}`];
                      //will need to return winning data instead of 'break' commands (true/false, winning shape)
                 } else if (row.includes('X') && row.includes('O')){
                     rowCheck.push(false);
@@ -85,7 +90,8 @@ function player (name, shape) {
                 && (gameBoard.gameValues[1][i] === gameBoard.gameValues[2][i])) {
                     console.log(`column number ${i} won!`);
                     gameBoard.boardWon = true;
-                     //will need to return winning data instead of 'break' commands (true/false, winning shape) -> display a modal with 'win' message
+                    gameBoard.scores[`${currentPlayer.playerOrder}`]++;
+                    gameBoard[`${currentPlayer.playerOrder}ScoreDisplay`].textContent = gameBoard.scores[`${currentPlayer.playerOrder}`];
                 } else if (columnCheck[i].includes("X") && columnCheck[i].includes("O")) {
                     columnCheck[3].push(false);
                 }
@@ -101,8 +107,8 @@ function player (name, shape) {
             if (diagonalCheckLeft.every((value) => value === diagonalCheckLeft[0] && value !== undefined)) {
                 console.log('wahoo!');
                 gameBoard.boardWon = true;
-                
-                //will need to return winning data instead of 'break' commands (true/false, winning shape) -> display a modal with 'win' message  
+                gameBoard.scores[`${currentPlayer.playerOrder}`]++;
+                gameBoard[`${currentPlayer.playerOrder}ScoreDisplay`].textContent = gameBoard.scores[`${currentPlayer.playerOrder}`] 
             } else if (diagonalCheckLeft.includes('X') && diagonalCheckLeft.includes('O')) {
                 diagonalCheckLeft = false;
             }
@@ -110,8 +116,10 @@ function player (name, shape) {
             if (diagonalCheckRight.every((value) => value === diagonalCheckRight[0] && value !== undefined)) {
                 console.log('oohaw!');
                 gameBoard.boardWon = true;
+                gameBoard.scores[`${currentPlayer.playerOrder}`]++;
+                gameBoard[`${currentPlayer.playerOrder}ScoreDisplay`].textContent = gameBoard.scores[`${currentPlayer.playerOrder}`];
                 
-                //will need to return winning data instead of 'break' commands (true/false, winning shape) -> display a modal with 'win' message
+               
             } else if (diagonalCheckRight.includes('X') && diagonalCheckRight.includes('O')) {
                 diagonalCheckRight = false;
             }
@@ -157,11 +165,11 @@ function player (name, shape) {
         
     }
 
-    return {  playerName, chosenShape, placeShape };
+    return {  playerName, chosenShape, playerOrder, placeShape };
 }
 
-let playerOne = player('Jenn', 'X');
-let playerTwo = player('Rozy', 'O');
+let playerOne = player('Jenn', 'X', 'playerOne');
+let playerTwo = player('Rozy', 'O', 'playerTwo');
 
 
 const gameFlow = function () {
