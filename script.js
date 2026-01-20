@@ -185,13 +185,18 @@ const gameFlow = function () {
             const formData = new FormData(playerForm);
             const formProps = Object.fromEntries(formData);
 
-            let firstName = document.querySelector("#first-player > .outcome");
-            firstName.textContent = `${formProps['player-one']} (${formProps['shape-one']})`;
+            if (formProps['shape-one'] !== formProps['shape-two']) {
+                let firstName = document.querySelector("#first-player > .outcome");
+                firstName.textContent = `${formProps['player-one']} (${formProps['shape-one']})`;
 
-            let secondName = document.querySelector("#second-player > .outcome");
-            secondName.textContent = `${formProps['player-two']} (${formProps['shape-two']})`;
+                let secondName = document.querySelector("#second-player > .outcome");
+                secondName.textContent = `${formProps['player-two']} (${formProps['shape-two']})`;
 
-            introductions.close()
+                introductions.close()
+            } else {
+                let warningMessage = document.querySelector("#warning");
+                warningMessage.textContent = 'Please select different shapes for each player!';
+            }
         })
     })
 

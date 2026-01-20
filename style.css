@@ -150,7 +150,7 @@ body {
   align-items: start;
   font-weight: bold;
 
-  grid-template-rows: repeat(2, 7.5rem) 5rem;
+  grid-template-rows: repeat(2, 7.5rem) 1.5rem 5rem;
   grid-template-columns: 1fr 9rem;
   width: 30rem;
   padding: 1.25rem;
@@ -208,6 +208,7 @@ label, .shape-choice-heading {
 .shape-choice[for="X-two"] {
   content: url('./image-assets/cross.svg')
 }
+
 .shape-choice:hover {
   background: var(--hover);
   border-color: var(--hover);
@@ -230,6 +231,13 @@ label, .shape-choice-heading {
   grid-column-end: 3;
 
   align-self: end;
+}
+
+#warning {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  align-self: end;
+  color: red;
 }
 
 .placeX {
