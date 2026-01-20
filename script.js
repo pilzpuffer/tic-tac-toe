@@ -182,37 +182,35 @@ const gameFlow = function () {
     let allCells = document.querySelectorAll(".game-cell");
     allCells.forEach(function(cell) {
         cell.addEventListener('click', function () {
-            if (cell.childNodes.length === 0) {
-                let currentPlayer = gameBoard.movesMade % 2 === 0 ? playerOne : playerTwo;
+            let currentPlayer = gameBoard.movesMade % 2 === 0 ? playerOne : playerTwo;
 
-                if (gameBoard.boardWon === false) {
-                    if (currentPlayer === playerOne) {
-                        playerOne.placeShape(cell.dataset.row, cell.dataset.column);
-                        let shapeX = document.createElement("img");
-                        shapeX.setAttribute("src", './image-assets/cross.svg');
-                        shapeX.classList.add("placeX");
-                        cell.appendChild(shapeX);
-                    } else if (currentPlayer === playerTwo){
-                        playerTwo.placeShape(cell.dataset.row, cell.dataset.column);
-                        let shapeO = document.createElement("img");
-                        shapeO.setAttribute("src", './image-assets/circle.svg');
-                        shapeO.classList.add("placeO");
-                        cell.appendChild(shapeO);
-                    }
-                }     
+            if (cell.childNodes.length === 0 && gameBoard.boardWon === false) {
+                if (currentPlayer === playerOne) {
+                    playerOne.placeShape(cell.dataset.row, cell.dataset.column);
+                    let shapeX = document.createElement("img");
+                    shapeX.setAttribute("src", './image-assets/cross.svg');
+                    shapeX.classList.add("placeX");
+                    cell.appendChild(shapeX);
+                } else if (currentPlayer === playerTwo){
+                    playerTwo.placeShape(cell.dataset.row, cell.dataset.column);
+                    let shapeO = document.createElement("img");
+                    shapeO.setAttribute("src", './image-assets/circle.svg');
+                    shapeO.classList.add("placeO");
+                    cell.appendChild(shapeO);
+                }
+                   
             } else if (gameBoard.boardWon === true) {
-                    console.log('wahoooo?...');
-                    for (const row of gameBoard.gameValues) {
-                    row.length = 0;
-                    }
+                for (const row of gameBoard.gameValues) {
+                row.length = 0;
+                }
 
-                    allCells.forEach(function(cell) {
-                        cell.replaceChildren();
-                    })
+                allCells.forEach(function(cell) {
+                    cell.replaceChildren();
+                })
 
-                    gameBoard.boardWon = false;
+                gameBoard.boardWon = false;
             }
-        } )
+        })
       
     })
                         
