@@ -1,4 +1,6 @@
 # tic-tac-toe
+This project was a lesson in working with factory functions and de-learning habits of keeping some code global for 'easier, reliable access'. That last bit was a bit harder than I've imagined it'd be, but I'm happy that I've managed to complete this project without looking up the suggested 'hint' article in the task description.
+
 
 # ACKNOWLEDGEMENTS
 

@@ -66,7 +66,6 @@ function player (name, shape, order) {
         let rowCheck = [];
         let columnCheck = [[], [], [], []];
         let currentPlayer = gameBoard.movesMade % 2 === 0 ? gameBoard.playerOne : gameBoard.playerTwo;
-        console.log(currentPlayer);
 
         const horizontalWin = function() {
             for (const row of gameBoard.gameValues) {
@@ -74,14 +73,11 @@ function player (name, shape, order) {
                 var denseRow = row.filter(function (x) { return x !== undefined && x != null; });
                 if (denseRow.length === 3
                     && denseRow.every((value) => value === denseRow[0])) {
-                    console.log('meow', gameBoard.gameValues.indexOf(row));
-                    console.log(`winning value is ${row[0]}`);
                     gameBoard.boardWon = true;
                     gameBoard.scores[`${currentPlayer.playerOrder}`]++;
                     gameBoard[`${currentPlayer.playerOrder}ScoreDisplay`].textContent = gameBoard.scores[`${currentPlayer.playerOrder}`];
                 } else if (row.includes('X') && row.includes('O')){
                     rowCheck.push(false);
-                    console.log(rowCheck);
                 }
             }
         };      
@@ -93,7 +89,6 @@ function player (name, shape, order) {
                 if ((gameBoard.gameValues[0][i] !== undefined &&
                 gameBoard.gameValues[0][i] === gameBoard.gameValues[1][i])
                 && (gameBoard.gameValues[1][i] === gameBoard.gameValues[2][i])) {
-                    console.log(`column number ${i} won!`);
                     gameBoard.boardWon = true;
                     gameBoard.scores[`${currentPlayer.playerOrder}`]++;
                     gameBoard[`${currentPlayer.playerOrder}ScoreDisplay`].textContent = gameBoard.scores[`${currentPlayer.playerOrder}`];
@@ -110,7 +105,6 @@ function player (name, shape, order) {
             }
 
             if (diagonalCheckLeft.every((value) => value === diagonalCheckLeft[0] && value !== undefined)) {
-                console.log('wahoo!');
                 gameBoard.boardWon = true;
                 gameBoard.scores[`${currentPlayer.playerOrder}`]++;
                 gameBoard[`${currentPlayer.playerOrder}ScoreDisplay`].textContent = gameBoard.scores[`${currentPlayer.playerOrder}`] 
@@ -119,7 +113,6 @@ function player (name, shape, order) {
             }
             
             if (diagonalCheckRight.every((value) => value === diagonalCheckRight[0] && value !== undefined)) {
-                console.log('oohaw!');
                 gameBoard.boardWon = true;
                 gameBoard.scores[`${currentPlayer.playerOrder}`]++;
                 gameBoard[`${currentPlayer.playerOrder}ScoreDisplay`].textContent = gameBoard.scores[`${currentPlayer.playerOrder}`];
